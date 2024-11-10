@@ -33,6 +33,7 @@ var (
 )
 
 func New() Service {
+	log.Println(port, database, address)
 	num, err := strconv.Atoi(database)
 	if err != nil {
 		log.Fatalf(fmt.Sprintf("database incorrect %v", err))
