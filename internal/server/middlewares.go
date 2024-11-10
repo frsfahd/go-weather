@@ -45,6 +45,7 @@ func Limiter() gin.HandlerFunc {
 		ip := ctx.ClientIP()
 		// Lock the mutex to protect this section from race conditions.
 		mu.Lock()
+		defer mu.Unlock()
 		// new client
 		if _, found := clients[ip]; !found {
 			clients[ip] = &client{limiter: rate.NewLimiter(rate.Limit(token_rate), bucket_size)}
@@ -58,7 +59,6 @@ func Limiter() gin.HandlerFunc {
 			ctx.JSON(http.StatusTooManyRequests, res)
 			return
 		}
-		mu.Unlock()
 		ctx.Next()
 	}
 }
