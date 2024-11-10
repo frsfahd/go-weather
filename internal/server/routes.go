@@ -24,9 +24,9 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 	r.GET("/client", s.CheckClient)
 
-	r.GET("/test", s.HelloWorldHandler)
+	r.GET("/test", s.HealthHandler)
 
-	r.GET("/health", s.healthHandler)
+	r.GET("/health", s.DBHealthHandler)
 
 	return r
 }
@@ -148,11 +148,11 @@ func (s *Server) GetWeatherOneWeek(c *gin.Context) {
 	}
 }
 
-func (s *Server) HelloWorldHandler(c *gin.Context) {
-	resp := make(map[string]string)
-	resp["message"] = "ok"
+func (s *Server) HealthHandler(c *gin.Context) {
+	// resp := make(map[string]string)
+	// resp["message"] = "ok"
 
-	c.JSON(http.StatusOK, resp)
+	c.String(http.StatusOK, "ok")
 }
 func (s *Server) CheckClient(c *gin.Context) {
 	resp := make(map[string]string)
@@ -160,6 +160,6 @@ func (s *Server) CheckClient(c *gin.Context) {
 	resp["clientIP"] = c.ClientIP()
 	c.IndentedJSON(http.StatusOK, resp)
 }
-func (s *Server) healthHandler(c *gin.Context) {
+func (s *Server) DBHealthHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, s.db.Health())
 }
