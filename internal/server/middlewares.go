@@ -1,6 +1,7 @@
 package server
 
 import (
+	"net/http"
 	"os"
 	"strconv"
 	"sync"
@@ -17,7 +18,7 @@ var (
 
 func Limiter() gin.HandlerFunc {
 	type client struct {
-		limiter   rate.Limiter
+		limiter   *rate.Limiter
 		last_seen time.Time
 	}
 	var (
@@ -41,6 +42,23 @@ func Limiter() gin.HandlerFunc {
 
 	// limit := rate.NewLimiter(token_rate, bucket_size)
 	return func(ctx *gin.Context) {
-		// net.SplitHostPort(ctx.RemoteIP())
+		ip := ctx.ClientIP()
+		// Lock the mutex to protect this section from race conditions.
+		mu.Lock()
+		// new client
+		if _, found := clients[ip]; !found {
+			clients[ip] = &client{limiter: rate.NewLimiter(rate.Limit(token_rate), bucket_size)}
+		}
+		clients[ip].last_seen = time.Now()
+		// check the limit
+		if !clients[ip].limiter.Allow() {
+			res := Response{
+				Message: "The API is at capacity, try again later.",
+			}
+			ctx.JSON(http.StatusTooManyRequests, res)
+			return
+		}
+		mu.Unlock()
+		ctx.Next()
 	}
 }

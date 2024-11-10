@@ -17,6 +17,8 @@ var API_KEY = os.Getenv("API_KEY")
 func (s *Server) RegisterRoutes() http.Handler {
 	r := gin.Default()
 
+	r.Use(Limiter())
+
 	// r.Use(gin.Logger())
 
 	r.GET("/today/:location", s.GetWeatherToday)
