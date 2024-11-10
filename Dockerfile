@@ -10,7 +10,7 @@ RUN go build -o /go/bin/main -v ./cmd/api/main.go
 FROM alpine:latest
 WORKDIR /app
 RUN apk --no-cache add ca-certificates
-COPY --from=builder /go/bin/main /go/src/.env.vault /app/
+COPY --from=builder /go/bin/main /go/src/app/.env.vault /app/
 ENTRYPOINT /app/main
 LABEL Name=goweather Version=0.0.1
 EXPOSE 8003
