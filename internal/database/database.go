@@ -34,17 +34,17 @@ var (
 
 func New() Service {
 	log.Println(port, database, address)
-	// num, err := strconv.Atoi(database)
-	// if err != nil {
-	// 	log.Fatalf(fmt.Sprintf("database incorrect %v", err))
-	// }
+	num, err := strconv.Atoi(database)
+	if err != nil {
+		log.Fatalf(fmt.Sprintf("database incorrect %v", err))
+	}
 
 	fullAddress := fmt.Sprintf("%s:%s", address, port)
 
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     fullAddress,
 		Password: password,
-		DB:       0,
+		DB:       num,
 		// Note: It's important to add this for a secure connection. Most cloud services that offer Redis should already have this configured in their services.
 		// For manual setup, please refer to the Redis documentation: https://redis.io/docs/latest/operate/oss_and_stack/management/security/encryption/
 		// TLSConfig: &tls.Config{
