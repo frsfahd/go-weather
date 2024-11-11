@@ -6,7 +6,7 @@ Additionally, there is also performance testing with [k6](https://grafana.com/do
 
 ## Getting Started
 
-> Live demo : https://go-weather.fly.biz.id/
+> Live demo : https://go-weather.fly.biz.id/docs
 
 1. clone this repo
 2. spin up redis instance `make docker-run`

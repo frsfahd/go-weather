@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/frsfahd/go-weather/docs"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -31,6 +32,8 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.GET("/test", s.HealthHandler)
 
 	r.GET("/health", s.DBHealthHandler)
+
+	r.StaticFS("/docs", http.FS(docs.DocsFS))
 
 	return r
 }

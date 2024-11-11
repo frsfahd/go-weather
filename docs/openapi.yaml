@@ -1,0 +1,567 @@
+openapi: '3.0.3'
+info:
+  title: go-weather
+  version: '1.0'
+servers:
+  - url: https://go-weather.fly.biz.id
+
+components:
+  schemas:
+    Daily_Weather:
+      type: object
+      properties:
+        datetime:
+          type: string
+          format: date
+        datetimeEpoch:
+          type: integer
+        temp:
+          type: number
+        feelslike:
+          type: number
+        humidity:
+          type: number
+        precipprob:
+          type: integer
+        precipcover:
+          type: number
+        preciptype:
+          type: array
+          items:
+            type: string
+        windspeed:
+          type: number
+        pressure:
+          type: integer
+        uvindex:
+          type: integer
+        conditions:
+          type: string
+        description:
+          type: string
+        Hours:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Hourly_Weather'
+    Hourly_Weather:
+      type: object
+      properties:
+        conditions:
+          type: string
+        datetime:
+          type: string
+          format: time
+        feelslike:
+          type: integer
+        humidity:
+          type: number
+        precipprob:
+          type: integer
+        preciptype:
+          type: string
+          nullable: true
+        pressure:
+          type: integer
+        temp:
+          type: integer
+        uvindex:
+          type: integer
+        windspeed:
+          type: number
+    Weather:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        address:
+          type: string
+        timezone:
+          type: string
+        Days:
+          type: array
+          items:
+            $ref: '#/components/schemas/Daily_Weather'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+  responses:
+    Error:
+      description: 'error response'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Oneday_Weather:
+      description: 'one day weather response'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                $ref: '#/components/schemas/Weather'
+          examples:
+            Oneday_Weather:
+              $ref: '#/components/examples/Oneday_Weather'
+    Oneweek_Weather:
+      description: one week weather response''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                $ref: '#/components/schemas/Weather'
+          examples:
+            Oneday_Weather:
+              $ref: '#/components/examples/Oneweek_Weather'
+  examples:
+    Oneday_Weather:
+      value:
+        message: ok
+        data:
+          latitude: -6.25667
+          longitude: 106.991
+          address: 'Bekasi, JABODETABEK, Indonesia'
+          timezone: Asia/Jakarta
+          days:
+            - datetime: '2024-11-11'
+              datetimeEpoch: 0
+              temp: 28.4
+              feelslike: 31.5
+              humidity: 76.2
+              precipprob: 100
+              precipcover: 79.17
+              preciptype:
+                - rain
+              windspeed: 16.6
+              pressure: 1009
+              uvindex: 9
+              conditions: 'Rain, Partially cloudy'
+              description: Partly cloudy throughout the day with storms possible.
+              hours:
+                - conditions: Partially cloudy
+                  datetime: '00:00:00'
+                  feelslike: 26
+                  humidity: 88.75
+                  precipprob: 0
+                  preciptype: null
+                  pressure: 1010
+                  temp: 26
+                  uvindex: 0
+                  windspeed: 16.6
+                - conditions: Partially cloudy
+                  datetime: '01:00:00'
+                  feelslike: 26
+                  humidity: 83.56
+                  precipprob: 0
+                  preciptype: null
+                  pressure: 1009
+                  temp: 26
+                  uvindex: 0
+                  windspeed: 9.4
+                - conditions: Partially cloudy
+                  datetime: '02:00:00'
+                  feelslike: 26
+                  humidity: 83.56
+                  precipprob: 0
+                  preciptype: null
+                  pressure: 1008
+                  temp: 26
+                  uvindex: 0
+                  windspeed: 9.4
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '03:00:00'
+                  feelslike: 26
+                  humidity: 83.56
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1008
+                  temp: 26
+                  uvindex: 0
+                  windspeed: 9.4
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '04:00:00'
+                  feelslike: 25
+                  humidity: 98.73
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1008
+                  temp: 25
+                  uvindex: 0
+                  windspeed: 0.4
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '05:00:00'
+                  feelslike: 25
+                  humidity: 93.79
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1008.9
+                  temp: 25
+                  uvindex: 0
+                  windspeed: 0.8
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '06:00:00'
+                  feelslike: 25
+                  humidity: 93.39
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1009
+                  temp: 25
+                  uvindex: 0
+                  windspeed: 5.6
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '07:00:00'
+                  feelslike: 30.2
+                  humidity: 88.45
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1010
+                  temp: 26.9
+                  uvindex: 2
+                  windspeed: 9.4
+                - conditions: Partially cloudy
+                  datetime: '08:00:00'
+                  feelslike: 35.7
+                  humidity: 74.6
+                  precipprob: 0
+                  preciptype: null
+                  pressure: 1011
+                  temp: 29.8
+                  uvindex: 4
+                  windspeed: 5.4
+                - conditions: Partially cloudy
+                  datetime: '09:00:00'
+                  feelslike: 35.3
+                  humidity: 62.74
+                  precipprob: 0
+                  preciptype: null
+                  pressure: 1011
+                  temp: 30.9
+                  uvindex: 6
+                  windspeed: 5.4
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '10:00:00'
+                  feelslike: 36.5
+                  humidity: 59.51
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1011
+                  temp: 31.8
+                  uvindex: 8
+                  windspeed: 5.7
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '11:00:00'
+                  feelslike: 33.8
+                  humidity: 73.54
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1010
+                  temp: 29.2
+                  uvindex: 9
+                  windspeed: 7.8
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '12:00:00'
+                  feelslike: 37.7
+                  humidity: 70.18
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1008
+                  temp: 31
+                  uvindex: 9
+                  windspeed: 5.8
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '13:00:00'
+                  feelslike: 36.8
+                  humidity: 59.54
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1007.1
+                  temp: 32
+                  uvindex: 9
+                  windspeed: 13.1
+                - conditions: 'Rain, Partially cloudy'
+                  datetime: '14:00:00'
+                  feelslike: 36.4
+                  humidity: 59.75
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1007
+                  temp: 31.7
+                  uvindex: 7
+                  windspeed: 12.3
+                - conditions: 'Rain, Overcast'
+                  datetime: '15:00:00'
+                  feelslike: 35.9
+                  humidity: 60.37
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1007
+                  temp: 31.5
+                  uvindex: 5
+                  windspeed: 10.4
+                - conditions: 'Rain, Overcast'
+                  datetime: '16:00:00'
+                  feelslike: 34.8
+                  humidity: 65.46
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1007
+                  temp: 30.4
+                  uvindex: 1
+                  windspeed: 9.4
+                - conditions: 'Rain, Overcast'
+                  datetime: '17:00:00'
+                  feelslike: 34
+                  humidity: 68.97
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1007
+                  temp: 29.7
+                  uvindex: 0
+                  windspeed: 8.3
+                - conditions: 'Rain, Overcast'
+                  datetime: '18:00:00'
+                  feelslike: 33.4
+                  humidity: 70.58
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1008
+                  temp: 29.3
+                  uvindex: 0
+                  windspeed: 7.2
+                - conditions: 'Rain, Overcast'
+                  datetime: '19:00:00'
+                  feelslike: 32.3
+                  humidity: 74.83
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1009
+                  temp: 28.5
+                  uvindex: 0
+                  windspeed: 6.8
+                - conditions: 'Rain, Overcast'
+                  datetime: '20:00:00'
+                  feelslike: 32
+                  humidity: 75.7
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1010
+                  temp: 28.3
+                  uvindex: 0
+                  windspeed: 6.1
+                - conditions: 'Rain, Overcast'
+                  datetime: '21:00:00'
+                  feelslike: 31.3
+                  humidity: 78.89
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1011
+                  temp: 27.8
+                  uvindex: 0
+                  windspeed: 7.2
+                - conditions: 'Rain, Overcast'
+                  datetime: '22:00:00'
+                  feelslike: 30.7
+                  humidity: 79.8
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1011
+                  temp: 27.5
+                  uvindex: 0
+                  windspeed: 6.8
+                - conditions: 'Rain, Overcast'
+                  datetime: '23:00:00'
+                  feelslike: 30.3
+                  humidity: 80.26
+                  precipprob: 100
+                  preciptype:
+                    - rain
+                  pressure: 1011
+                  temp: 27.3
+                  uvindex: 0
+                  windspeed: 5.8
+    Oneweek_Weather:
+      value:
+        message: ok
+        data:
+          latitude: -6.25667
+          longitude: 106.991
+          address: 'Bekasi, JABODETABEK, Indonesia'
+          timezone: Asia/Jakarta
+          days:
+            - datetime: '2024-11-11'
+              datetimeEpoch: 0
+              temp: 28.2
+              feelslike: 31.1
+              humidity: 77.4
+              precipprob: 100
+              precipcover: 79.17
+              preciptype:
+                - rain
+              windspeed: 27.1
+              pressure: 1009.1
+              uvindex: 9
+              conditions: 'Rain, Partially cloudy'
+              description: Partly cloudy throughout the day with storms possible.
+            - datetime: '2024-11-12'
+              datetimeEpoch: 0
+              temp: 28.7
+              feelslike: 31.3
+              humidity: 71.5
+              precipprob: 100
+              precipcover: 62.5
+              preciptype:
+                - rain
+              windspeed: 14.8
+              pressure: 1008.3
+              uvindex: 10
+              conditions: 'Rain, Partially cloudy'
+              description: Partly cloudy throughout the day with storms possible.
+            - datetime: '2024-11-13'
+              datetimeEpoch: 0
+              temp: 29.5
+              feelslike: 32.3
+              humidity: 66.4
+              precipprob: 100
+              precipcover: 58.33
+              preciptype:
+                - rain
+              windspeed: 16.2
+              pressure: 1007.9
+              uvindex: 10
+              conditions: 'Rain, Partially cloudy'
+              description: Partly cloudy throughout the day with storms possible.
+            - datetime: '2024-11-14'
+              datetimeEpoch: 0
+              temp: 30
+              feelslike: 33.1
+              humidity: 63.9
+              precipprob: 80.6
+              precipcover: 37.5
+              preciptype:
+                - rain
+              windspeed: 19.4
+              pressure: 1008.4
+              uvindex: 10
+              conditions: 'Rain, Partially cloudy'
+              description: Partly cloudy throughout the day with storms possible.
+            - datetime: '2024-11-15'
+              datetimeEpoch: 0
+              temp: 29.2
+              feelslike: 32.7
+              humidity: 69.5
+              precipprob: 87.1
+              precipcover: 83.33
+              preciptype:
+                - rain
+              windspeed: 14
+              pressure: 1008.5
+              uvindex: 8
+              conditions: 'Rain, Overcast'
+              description: Cloudy skies throughout the day with storms possible.
+            - datetime: '2024-11-16'
+              datetimeEpoch: 0
+              temp: 29
+              feelslike: 32.4
+              humidity: 70.8
+              precipprob: 100
+              precipcover: 54.17
+              preciptype:
+                - rain
+              windspeed: 13.3
+              pressure: 1007.7
+              uvindex: 9
+              conditions: 'Rain, Partially cloudy'
+              description: Partly cloudy throughout the day with storms possible.
+            - datetime: '2024-11-17'
+              datetimeEpoch: 0
+              temp: 29.7
+              feelslike: 32.9
+              humidity: 65.7
+              precipprob: 100
+              precipcover: 25
+              preciptype:
+                - rain
+              windspeed: 14.4
+              pressure: 1007.3
+              uvindex: 10
+              conditions: 'Rain, Partially cloudy'
+              description: >-
+                Partly cloudy throughout the day with a chance of rain throughout the
+                day.
+            - datetime: '2024-11-18'
+              datetimeEpoch: 0
+              temp: 29.2
+              feelslike: 32.5
+              humidity: 68.4
+              precipprob: 83.9
+              precipcover: 33.33
+              preciptype:
+                - rain
+              windspeed: 15.1
+              pressure: 1007.6
+              uvindex: 6
+              conditions: 'Rain, Partially cloudy'
+              description: >-
+                Partly cloudy throughout the day with a chance of rain throughout the
+                day.
+
+paths:
+  /today/{location}:
+    get:
+      description: "today's weather info, with hourly presentation."
+      parameters:
+        - in: path
+          name: location
+          required: true
+          schema:
+            type: string
+          description: city name (e.g. cairo, kazan, ankara, ...)
+      responses:
+        '200':
+          $ref: '#/components/responses/Oneday_Weather'
+        default:
+          $ref: '#/components/responses/Error'
+  /oneWeek/{location}:
+    get:
+      description: "a week's weather info, with daily presentation"
+      parameters:
+        - in: path
+          name: location
+          required: true
+          schema:
+            type: string
+          description: city name (e.g. cairo, kazan, ankara, ...)
+      responses:
+        '200':
+          $ref: '#/components/responses/Oneweek_Weather'
+        default:
+          $ref: '#/components/responses/Error'
