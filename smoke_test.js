@@ -3,7 +3,7 @@
 import { group, sleep, check } from 'k6';
 import http from 'k6/http';
 
-export const options = { vus: 1, iterations: 12 };
+export const options = { vus: 3, iterations: 4 };
 
 export default function () {
   let params;

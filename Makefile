@@ -1,7 +1,7 @@
 # Simple Makefile for a Go project
 
 # Build the application
-all: build test
+all: build smoke_test
 
 build:
 	@echo "Building..."
@@ -30,14 +30,15 @@ docker-down:
 		docker-compose down; \
 	fi
 
-# Test the application
-test:
-	@echo "Testing..."
-	@go test ./... -v
-# Integrations Tests for the application
-itest:
-	@echo "Running integration tests..."
-	@go test ./internal/database -v
+# Load Test the application with average load
+load_test:
+	@echo "Load Testing..."
+	@K6_WEB_DASHBOARD=true k6 run load_test.js
+
+# Smoke Test with minimal load
+smoke_test:
+	@echo "Smoke Testing..."
+	@K6_WEB_DASHBOARD=true k6 run smoke_test.js
 
 # Clean the binary
 clean:
@@ -61,4 +62,4 @@ watch:
             fi; \
         fi
 
-.PHONY: all build run test clean watch docker-run docker-down itest
+.PHONY: all build run load_test smoke_test clean watch docker-run docker-down
