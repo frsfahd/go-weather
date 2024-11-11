@@ -2,7 +2,8 @@
 
 [Restful weather API](https://roadmap.sh/projects/weather-api-wrapper-service) based on [virtual crossing](https://www.visualcrossing.com/) service. This project adds cache layer to the based API.
 
-Additionally, there is also performance testing with [k6](https://grafana.com/docs/k6/latest/) (see `load_test.js` and `smoke_test.js`)
+Additionally, there is also performance testing with [k6](https://grafana.com/docs/k6/latest/) (see `load_test.js` and `smoke_test.js`).
+For rate limiting, it uses token bucket from `golang.org/x/time/rate` (see `middlewares.go`)
 
 ## Getting Started
 
