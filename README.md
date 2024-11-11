@@ -1,53 +1,70 @@
-# Project github.com/frsfahd/go-weather
+# go-weather
 
-One Paragraph of project description goes here
+[Restful weather API](https://roadmap.sh/projects/weather-api-wrapper-service) based on [virtual crossing](https://www.visualcrossing.com/) service. This project adds cache layer to the based API.
+
+Additionally, there is also performance testing with [k6](https://grafana.com/docs/k6/latest/) (see `load_test.js` and `smoke_test.js`)
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+> Live demo : https://go-weather.fly.biz.id/
+
+1. clone this repo
+2. spin up redis instance `make docker-run`
+3. create .env file (see `env-sample`)
+4. run the API `make run`
 
 ## MakeFile
 
 Run build make command with tests
+
 ```bash
 make all
 ```
 
 Build the application
+
 ```bash
 make build
 ```
 
 Run the application
+
 ```bash
 make run
 ```
+
 Create DB container
+
 ```bash
 make docker-run
 ```
 
 Shutdown DB Container
+
 ```bash
 make docker-down
 ```
 
-DB Integrations Test:
-```bash
-make itest
-```
-
 Live reload the application:
+
 ```bash
 make watch
 ```
 
-Run the test suite:
+Run the smoke test:
+
 ```bash
-make test
+make smoke_test
+```
+
+Run the load test:
+
+```bash
+make load_test
 ```
 
 Clean up binary from the last build:
+
 ```bash
 make clean
 ```
