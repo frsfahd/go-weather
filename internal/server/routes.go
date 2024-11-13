@@ -70,7 +70,7 @@ func (s *Server) GetWeatherToday(c *gin.Context) {
 		}
 		weather = WeatherResponse{Location: Location{Latitude: externalData.Latitude, Longitude: externalData.Longitude, Address: externalData.ResolvedAddress, Timezone: externalData.Timezone}, Days: externalData.Days}
 		// response: 200 (from redis cache)
-		c.IndentedJSON(http.StatusOK, Response{Message: "ok", Data: weather})
+		c.JSON(http.StatusOK, Response{Message: "ok", Data: weather})
 		return
 	}
 
@@ -89,7 +89,7 @@ func (s *Server) GetWeatherToday(c *gin.Context) {
 
 		weather = WeatherResponse{Location: Location{Latitude: externalData.Latitude, Longitude: externalData.Longitude, Address: externalData.ResolvedAddress, Timezone: externalData.Timezone}, Days: externalData.Days}
 		// response: 200 (directly from API)
-		c.IndentedJSON(http.StatusOK, Response{Message: "ok", Data: weather})
+		c.JSON(http.StatusOK, Response{Message: "ok", Data: weather})
 	case err := <-errCh:
 		c.Error(err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, Response{Message: "server error"})
@@ -129,7 +129,7 @@ func (s *Server) GetWeatherOneWeek(c *gin.Context) {
 		}
 		weather = WeatherResponse{Location: Location{Latitude: externalData.Latitude, Longitude: externalData.Longitude, Address: externalData.ResolvedAddress, Timezone: externalData.Timezone}, Days: externalData.Days}
 		// response: 200 (from redis cache)
-		c.IndentedJSON(http.StatusOK, Response{Message: "ok", Data: weather})
+		c.JSON(http.StatusOK, Response{Message: "ok", Data: weather})
 		return
 	}
 
@@ -148,7 +148,7 @@ func (s *Server) GetWeatherOneWeek(c *gin.Context) {
 
 		weather = WeatherResponse{Location: Location{Latitude: externalData.Latitude, Longitude: externalData.Longitude, Address: externalData.ResolvedAddress, Timezone: externalData.Timezone}, Days: externalData.Days}
 		// response: 200 (directly from API)
-		c.IndentedJSON(http.StatusOK, Response{Message: "ok", Data: weather})
+		c.JSON(http.StatusOK, Response{Message: "ok", Data: weather})
 	case err := <-errCh:
 		c.Error(err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, Response{Message: "server error"})
@@ -165,7 +165,7 @@ func (s *Server) CheckClient(c *gin.Context) {
 	resp := make(map[string]string)
 	resp["remoteIP"] = c.RemoteIP()
 	resp["clientIP"] = c.ClientIP()
-	c.IndentedJSON(http.StatusOK, resp)
+	c.JSON(http.StatusOK, resp)
 }
 func (s *Server) DBHealthHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, s.db.Health())
