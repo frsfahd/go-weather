@@ -1,0 +1,14 @@
+# development@v2
+PORT=
+APP_ENV=
+DB_ADDRESS=
+DB_PORT=
+DB_PASSWORD=
+DB_DATABASE=
+
+API_KEY=       # sign up here: https://www.visualcrossing.com/account/
+CACHE_TTL=12  # # in hour
+
+# rate limiter (token bucket)
+BUCKET_SIZE=300
+TOKEN_RATE=100
